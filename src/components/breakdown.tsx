@@ -1,4 +1,4 @@
-import ehr from "@/assets/work-ehr.jpg";
+import ehr from "@/assets/work-ehr.webp";
 import { concepts } from "@/data/projects";
 
 const skillGroups = [
