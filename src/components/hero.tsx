@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import portrait from "@/assets/portrait-dev.png";
+import portraitSm from "@/assets/portrait-dev-640.webp";
+import portrait from "@/assets/portrait-dev.webp";
 import { Magnetic } from "@/components/motion-text";
 import { Parallax } from "@/components/reveal";
 import { tools } from "@/data/projects";
@@ -134,6 +135,8 @@ export function Hero() {
               <Parallax strength={-18} className="absolute inset-[-6%]">
                 <motion.img
                   src={portrait}
+                  srcSet={`${portraitSm} 640w, ${portrait} 1024w`}
+                  sizes="(max-width: 640px) 100vw, 1152px"
                   alt="Illustrated portrait of Mostafa Samir, a healthcare full-stack engineer"
                   width={1024}
                   height={1024}
