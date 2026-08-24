@@ -218,7 +218,14 @@ export function AnimatedChars({
   );
 }
 
-/** Card that leans in 3D toward the pointer. */
+/**
+ * Card that leans in 3D toward the pointer.
+ *
+ * The bounding box is measured once per hover (not per pointer event) and
+ * every pointer move is coalesced into a single rAF style write, so moving
+ * the mouse across a project card no longer forces a layout read + style
+ * recalc for each of the ~120 events per second the browser can emit.
+ */
 export function Tilt({
   children,
   className = "",
@@ -229,28 +236,63 @@ export function Tilt({
   max?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const box = useRef<DOMRect | null>(null);
+  const frame = useRef(0);
+  const target = useRef({ x: 0, y: 0 });
+
+  const flush = () => {
+    frame.current = 0;
+    const el = ref.current;
+    if (!el || !box.current) return;
+    const { x, y } = target.current;
+    el.style.transform = `perspective(1400px) rotateY(${(x * max).toFixed(2)}deg) rotateX(${(-y * max).toFixed(2)}deg) translateZ(0)`;
+  };
+
+  useEffect(
+    () => () => {
+      if (frame.current) cancelAnimationFrame(frame.current);
+    },
+    [],
+  );
 
   return (
     <div
       ref={ref}
       className={`tilt ${className}`}
-      onPointerMove={(event) => {
+      onPointerEnter={(event) => {
+        if (event.pointerType !== "mouse") return;
         const el = ref.current;
-        if (!el || event.pointerType !== "mouse") return;
-        const rect = el.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        if (!el) return;
+        box.current = el.getBoundingClientRect();
+        el.style.willChange = "transform";
         el.style.transition = "transform 0.15s linear";
-        el.style.transform = `perspective(1400px) rotateY(${x * max}deg) rotateX(${-y * max}deg) translateZ(0)`;
+      }}
+      onPointerMove={(event) => {
+        const rect = box.current;
+        if (!rect) return;
+        target.current = {
+          x: (event.clientX - rect.left) / rect.width - 0.5,
+          y: (event.clientY - rect.top) / rect.height - 0.5,
+        };
+        if (!frame.current) frame.current = requestAnimationFrame(flush);
       }}
       onPointerLeave={() => {
+        box.current = null;
+        if (frame.current) {
+          cancelAnimationFrame(frame.current);
+          frame.current = 0;
+        }
         const el = ref.current;
         if (!el) return;
         el.style.transition = "transform 0.7s cubic-bezier(0.22,1,0.36,1)";
         el.style.transform = "none";
+        window.setTimeout(() => {
+          if (ref.current && !box.current) ref.current.style.willChange = "auto";
+        }, 700);
       }}
     >
       {children}
     </div>
   );
 }
+

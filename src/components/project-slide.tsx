@@ -15,6 +15,8 @@ export function ProjectSlide({ project }: { project: Project }) {
             <div className="media-zoom rounded-[1.5rem] bg-secondary">
               <img
                 src={project.image}
+                srcSet={`${project.imageSmall} 700w, ${project.image} 1400w`}
+                sizes="(max-width: 1024px) 100vw, 800px"
                 alt={project.imageAlt}
                 width={1400}
                 height={900}

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import portrait from "@/assets/portrait-dev.png";
+import portraitSm from "@/assets/portrait-dev-640.webp";
+import portrait from "@/assets/portrait-dev.webp";
 import { Magnetic } from "@/components/motion-text";
 import { Parallax } from "@/components/reveal";
 import { tools } from "@/data/projects";
@@ -134,6 +135,8 @@ export function Hero() {
               <Parallax strength={-18} className="absolute inset-[-6%]">
                 <motion.img
                   src={portrait}
+                  srcSet={`${portraitSm} 640w, ${portrait} 1024w`}
+                  sizes="(max-width: 640px) 100vw, 1152px"
                   alt="Illustrated portrait of Mostafa Samir, a healthcare full-stack engineer"
                   width={1024}
                   height={1024}
@@ -181,24 +184,20 @@ export function Hero() {
               aria-label="Scroll to about section"
               className="press absolute left-1/2 hidden size-14 -translate-x-1/2 items-center justify-center rounded-full bg-card shadow-[var(--shadow-image)] edge sm:inline-flex"
             >
-              <motion.span
-                className="block size-2 transform-gpu rounded-full bg-foreground"
-                animate={reduce ? {} : { y: [-3, 3, -3] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              />
+              {/* CSS-driven loop: runs on the compositor with no per-frame JS. */}
+              <span className="nudge-y block size-2 transform-gpu rounded-full bg-foreground" />
             </a>
           </Magnetic>
 
           <div className="flex items-center gap-2 font-display text-2xl font-extrabold tracking-[-0.03em] sm:text-4xl">
             2026
-            <motion.span
+            {/* CSS-driven loop: no infinite rAF timeline for a decorative glyph. */}
+            <span
               aria-hidden
-              className="inline-flex size-7 transform-gpu items-center justify-center rounded-full border-2 border-current text-xs sm:size-9 sm:text-sm"
-              animate={reduce ? {} : { rotate: [0, 12, -12, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="wiggle-slow inline-flex size-7 transform-gpu items-center justify-center rounded-full border-2 border-current text-xs sm:size-9 sm:text-sm"
             >
               ˘‿˘
-            </motion.span>
+            </span>
           </div>
         </motion.div>
 

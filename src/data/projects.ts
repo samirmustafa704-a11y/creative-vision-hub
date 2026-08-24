@@ -1,7 +1,11 @@
-import booking from "@/assets/work-booking.jpg";
-import clinic from "@/assets/work-clinic.jpg";
-import ehr from "@/assets/work-ehr.jpg";
-import telemed from "@/assets/work-telemed.jpg";
+import bookingSm from "@/assets/work-booking-700.webp";
+import booking from "@/assets/work-booking.webp";
+import clinicSm from "@/assets/work-clinic-700.webp";
+import clinic from "@/assets/work-clinic.webp";
+import ehrSm from "@/assets/work-ehr-700.webp";
+import ehr from "@/assets/work-ehr.webp";
+import telemedSm from "@/assets/work-telemed-700.webp";
+import telemed from "@/assets/work-telemed.webp";
 
 export type Project = {
   slug: string;
@@ -14,6 +18,7 @@ export type Project = {
   year: string;
   description: string;
   image: string;
+  imageSmall: string;
   imageAlt: string;
   palette: string[];
   paletteNote?: string;
@@ -35,6 +40,7 @@ export const projects: Project[] = [
     description:
       "Built a modular EHR core with .NET 8 microservices and Clean Architecture: patient charts, encounters, problem lists, allergies, and e-prescribing. Designed for HIPAA-aligned auditing, per-facility data isolation, and clinician-level role-based access.",
     image: ehr,
+    imageSmall: ehrSm,
     imageAlt: "Electronic health record platform showing patient chart, encounters, and clinical timeline",
     palette: ["#0f2a43", "#1f9d8f", "#f08322", "#79c8f2", "#e5493f", "#e8e3da"],
     layout: "image-left",
@@ -52,6 +58,7 @@ export const projects: Project[] = [
     description:
       "Developed a telehealth platform with secure video visits, clinical note capture, and real-time remote patient monitoring. SignalR streams vitals from 1,000+ connected medical devices into clinician dashboards with threshold-based alerting.",
     image: telemed,
+    imageSmall: telemedSm,
     imageAlt: "Telehealth dashboard with live patient vitals, video consultation panel, and alerts",
     palette: ["#1f9d8f", "#5fc3b6", "#cfe8e3", "#f2795c", "#79c8f2", "#16283c"],
     layout: "image-right",
@@ -69,6 +76,7 @@ export const projects: Project[] = [
     description:
       "Engineered an interoperability layer bridging legacy HL7 v2 feeds, FHIR APIs, LIS lab results, and PACS imaging orders. Idempotent message processing, terminology mapping (ICD-10, SNOMED CT, LOINC), and full audit logging keep patient data consistent across systems.",
     image: clinic,
+    imageSmall: clinicSm,
     imageAlt: "Healthcare interoperability flow connecting HL7 v2, FHIR APIs, lab, and imaging systems",
     palette: ["#0f2a43", "#1f9d8f", "#f08322", "#d9584f", "#b9bfc4", "#e7f0ec"],
     paletteNote:
@@ -88,6 +96,7 @@ export const projects: Project[] = [
     description:
       "Built a patient portal with Next.js and .NET: online appointment booking, intake forms, lab result viewing, secure messaging with care teams, and prescription refill requests — accessible, mobile-first, and WCAG 2.1 AA compliant.",
     image: booking,
+    imageSmall: bookingSm,
     imageAlt: "Patient portal interface with appointment booking, lab results, and secure messaging",
     palette: ["#0f2a43", "#3b82c4", "#79c8f2", "#f08322", "#f6d635", "#e8e3da"],
     layout: "image-right",
