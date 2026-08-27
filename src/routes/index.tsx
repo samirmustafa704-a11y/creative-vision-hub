@@ -5,7 +5,7 @@ import { Work } from "@/components/site/Work";
 import { Expertise } from "@/components/site/Expertise";
 import { Experience } from "@/components/site/Experience";
 import { About } from "@/components/site/About";
-import { Contact } from "@/components/site/Contact";
+
 import { Footer } from "@/components/site/Footer";
 
 const title = "Mostafa Samir — Booking Systems Full Stack Engineer";
@@ -36,7 +36,6 @@ function Index() {
         <Expertise />
         <Experience />
         <About />
-        <Contact />
       </main>
       <Footer />
     </div>
